@@ -1,0 +1,73 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ai-voice-map-assistant
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+#  security:
+#    user:
+#      name: admin
+#      password: admin
+
+# OpenRouteService Configuration (Free API)
+openroute:
+  api-key: ${OPENROUTE_API_KEY:eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjBkOTQyYzU1MzA5MzQ3NTU4OGRmNWY4ZmI3NDM2MmFlIiwiaCI6Im11cm11cjY0In0=}
+  base-url: https://api.openrouteservice.org/v2
+  geocoding-url: https://api.openrouteservice.org/geocode/search
+
+# Ollama Configuration (Free Local AI)
+ollama:
+  base-url: ${OLLAMA_BASE_URL:http://localhost:11434}
+  model: llama2
+  temperature: 0.7
+  max-tokens: 150
+
+# OpenWeatherMap Configuration (Free API)
+openweather:
+  api-key: ${OPENWEATHER_API_KEY:69824679c6cabcbda090657911796bea}
+
+# Voice Assistant Configuration
+voice:
+  wake-word: hey assistant
+  default-language: en-US
+  supported-languages: en-US,te-IN
+  speech-rate: 1.0
+  speech-pitch: 1.0
+
+# Logging Configuration
+logging:
+  level:
+    com.smartroute: DEBUG
+    org.springframework.web: INFO
+    org.springframework.security: DEBUG
+
+# Management endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+# CORS Configuration
+cors:
+  allowed-origins: http://localhost:3000,http://localhost:5173
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+  allowed-headers: "*"
+  allow-credentials: true 
